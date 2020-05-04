@@ -18,7 +18,7 @@ router.get('/statistics/:word', async (req: Request, res: Response) => {
     const service: WordCounterService = req.app.get(SERVICE_NAME)
     const word = req.params.word
     if(!word){
-        res.status(401).send('error').end()
+        res.status(403).send('error').end()
         return
     }
     try {
