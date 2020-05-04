@@ -22,6 +22,10 @@ export default class Redis{
         }
     }
 
+    /**
+     *  increase the count of one word
+     * @param word 
+     */
     public async increaseWordCount(word:string):Promise<void>{
         try{
             await this.client.incr(word)
@@ -29,7 +33,26 @@ export default class Redis{
             console.error('Increasing word count failed with error' , err)
         }
     }
+    /**
+     * increases the count of multiple words
+     * @param words 
+     */
+    public async increaseWordsCount(words: string[]): Promise<void> {
+        try {
+            const pipeline = this.client.pipeline()
+            for(const word of words){
+                pipeline.incr(word)
+            }
+            await pipeline.exec()
+        } catch (err) {
+            console.error('Increasing word count failed with error', err)
+        }
+    }
     
+    /**
+     * get the count of one word from cache, if the word doesn't exists return 0
+     * @param word 
+     */
     public async getWordCount(word:string) :Promise<number>{
             const wordCount =  await this.client.get(word) 
             if(!wordCount){

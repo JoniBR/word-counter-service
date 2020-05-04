@@ -1,4 +1,7 @@
-# Express Redis Docker app
+# Word counter service
+This service exposes 2 APIs: 
+1. Receives a text input and counts the number of appearances for each word in the input.
+2. Receives a word and returns the number of times the word appeared so far (in all previous calls).
 
 Requirements: [Docker Community Edition](https://www.docker.com/community-edition)
 
@@ -6,21 +9,34 @@ To start the app run: `docker-compose up`.
 
 It will then be started on port 3000.
 
+# INPUTS
+ ## URL
+    any text sent that starts with the following prefix's will be treated as URL:
+    1. `https://`
+    2. `http://`
+    3. 'www.`
+## File
+    any text that starts with `/` will be treated as a file path.
+    only absolute paths (not relative) will work.
+## Plain Text
+    any plain text that isn't a url or a file.
+
 # Endpoints
 
-## Hello World
+## Post text
 
-```sh
-curl http://localhost:3000
+```
+POST
+http://localhost:3000
 ```
 
-## Storing Data
-```sh
-curl http://localhost:3000/store/my-key\?some\=value\&some-other\=other-value
+## Get counts
 ```
-
-## Fetching Data
-
-```sh
-curl http://localhost:3000/my-key
+ GET
+ http://localhost:3000/statistics/:word
 ```
+where :word is the word you want the count of.
+
+# Test
+`npm run test`
+
