@@ -9,7 +9,7 @@ To start the app run: `docker-compose up`.
 
 It will then be started on port 3000.
 
-# INPUTS
+# Inputs
  ## URL
     any text sent that starts with the following prefix's will be treated as URL:
     1. `https://`
